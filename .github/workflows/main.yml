@@ -9,17 +9,14 @@ permissions:
   contents: read
 
 jobs:
-  streamlit:
+  build:
     runs-on: ubuntu-latest
     steps:
-    
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-      - uses: streamlit/streamlit-app-action@v0.0.3
-        with:
-          app-path: streamlit_app.py
-          ruff: true
+      - name: Checkout code
+        uses: actions/checkout@v2
+
       - name: Make ChromeDriver executable
         run: chmod +x ./chromedriver.exe
+
+      - name: Run your scraping script
+        run: python scraping.py
