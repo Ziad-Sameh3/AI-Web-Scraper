@@ -8,7 +8,7 @@ def scraping(website):
     st.write("Launching Chrome driver...")
     
 
-def scraping(website)
+def scraping(website):
     print('Launching chrome driver...')
    
     chrome_path = './chromedriver.exe'
