@@ -7,7 +7,6 @@ from bs4 import BeautifulSoup
 def scraping(website):
     st.write("Launching Chrome driver...")
     
-  =
 
 def scraping(website)
     print('Launching chrome driver...')
