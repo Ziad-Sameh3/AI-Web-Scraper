@@ -1,6 +1,5 @@
 streamlit 
 google.generativeai
-json
 selenium
 beautifulsoup4
 lxml 
