@@ -4,9 +4,6 @@ from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 from bs4 import BeautifulSoup
 
-def scraping(website):
-    st.write("Launching Chrome driver...")
-    
 
 def scraping(website):
     print('Launching chrome driver...')
