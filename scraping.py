@@ -18,8 +18,6 @@ def scraping(website)
     options.add_argument('--no-sandbox')
     options.add_argument('--disable-dev-shm-usage')
     driver = webdriver.Chrome(service=Service(chrome_path), options=options)
-    driver = webdriver.Chrome( options=options)
-
 
     driver.get(website)
     html = driver.page_source
