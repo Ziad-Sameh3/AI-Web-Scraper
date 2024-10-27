@@ -45,29 +45,18 @@ def split_cleaned_content(cleaned_content, max_length=6000):
         cleaned_content[i : i + max_length] for i in range(0, len(cleaned_content), max_length)
         ]
 '''
-
-
 import streamlit as st
-import selenium.webdriver as webdriver
-from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
 from bs4 import BeautifulSoup
+import asyncio
+from pyppeteer import launch
 
-def scraping(website):
-    st.write("Launching Chrome driver...")
-    
-    options = webdriver.ChromeOptions()
-    options.add_argument('--headless')  # Ensures no display needed
-    options.add_argument('--no-sandbox')
-    options.add_argument('--disable-dev-shm-usage')
-
-    # Use WebDriver Manager to automatically handle the ChromeDriver setup
-    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
-    
-    # Fetch the web page
-    driver.get(website)
-    html = driver.page_source
-    driver.quit()  # Close the driver after fetching page source
+async def fetch_html(website):
+    # Launching a headless browser instance with Pyppeteer
+    browser = await launch(headless=True, args=['--no-sandbox', '--disable-dev-shm-usage'])
+    page = await browser.newPage()
+    await page.goto(website)
+    html = await page.content()
+    await browser.close()
     return html
 
 def extract_body_content(html_content):
@@ -79,18 +68,29 @@ def extract_body_content(html_content):
 
 def clean_body_content(body_content):
     soup = BeautifulSoup(body_content, "html.parser")
-    
     for script_or_style in soup(['script', 'style']):
         script_or_style.extract()
-    
     clean_content = soup.get_text(separator='\n')
     clean_content = "\n".join(
         line.strip() for line in clean_content.splitlines() if line.strip()
     )
-    
     return clean_content
 
 def split_cleaned_content(cleaned_content, max_length=6000):
     return [
         cleaned_content[i : i + max_length] for i in range(0, len(cleaned_content), max_length)
     ]
+
+# Streamlit app interface
+website = st.text_input("Enter website URL")
+if st.button("Fetch Content"):
+    if website:
+        st.write("Fetching content, please wait...")
+        # Run the fetch_html coroutine
+        html_content = asyncio.run(fetch_html(website))
+        body_content = extract_body_content(html_content)
+        cleaned_content = clean_body_content(body_content)
+        split_content = split_cleaned_content(cleaned_content)
+        
+        for part in split_content:
+            st.write(part)
