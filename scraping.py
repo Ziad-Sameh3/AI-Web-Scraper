@@ -14,9 +14,6 @@ def scraping(website)
    
     chrome_path = './chromedriver.exe'
     options = webdriver.ChromeOptions()
-    options.add_argument('--headless')  # Ensures no display needed
-    options.add_argument('--no-sandbox')
-    options.add_argument('--disable-dev-shm-usage')
     driver = webdriver.Chrome(service=Service(chrome_path), options=options)
 
     driver.get(website)
