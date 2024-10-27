@@ -7,3 +7,4 @@ html5lib
 python-dotenv
 chromedriver-autoinstaller
 webdriver-manager
+pyppeteer
