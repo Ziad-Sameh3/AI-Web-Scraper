@@ -17,6 +17,3 @@ jobs:
 
       - name: Make ChromeDriver executable
         run: chmod +x ./chromedriver.exe
-
-      - name: Run your scraping script
-        run: python scraping.py
