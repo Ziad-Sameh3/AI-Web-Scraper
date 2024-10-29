@@ -20,4 +20,4 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
       - name: Deploy to Streamlit Cloud
-        run: streamlit run main.py
+        run: streamlit run app.py
