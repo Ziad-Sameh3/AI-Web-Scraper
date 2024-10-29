@@ -1,13 +1,19 @@
 import selenium.webdriver as webdriver
 from selenium.webdriver.chrome.service import Service
+import chromedriver_autoinstaller
 from bs4 import BeautifulSoup
+
+chromedriver_autoinstaller.install()
 
 def scraping(website):
     print('Launching chrome driver...')
     
-    chrome_path = './chromedriver.exe'
+    #chrome_path = './chromedriver.exe'
     options = webdriver.ChromeOptions()
-    driver = webdriver.Chrome(service=Service(chrome_path), options=options)
+    options.add_argument("--headless")
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
+    driver = webdriver.Chrome(options=options)
     
 
     driver.get(website)
